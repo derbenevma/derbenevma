@@ -1,5 +1,5 @@
-## Hi there, I'm Maksim
-
+# Hi there, I'm Maksim
+### Currently a student
 <!--
 **derbenevma/derbenevma** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
