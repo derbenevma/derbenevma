@@ -3,9 +3,7 @@
 <<div id="header" align="center">
   <img src=https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWlpczZkamczbzMydGVnaTl5bDd1aGQ2dG92bDA5dTE1NGw3OGMxdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/M9gbBd9nbDrOTu1Mqx/giphy.gif>
 </div>!--
-**derbenevma/derbenevma** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
+ Here are some ideas to get you started:
 
 - 🔭 I’m currently working on ...
 - 🌱 I’m currently learning ...
