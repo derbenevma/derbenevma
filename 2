@@ -1,1 +1,96 @@
+import timeit
+import sys
 
+
+class NormalPoint:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def move(self, dx, dy):
+        self.x += dx
+        self.y += dy
+
+class SlotPoint:
+    __slots__ = ('x', 'y')
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def move(self, dx, dy):
+        self.x += dx
+        self.y += dy
+
+
+def benchmark_move(point_class, num_iterations=1000):
+    """Замер времени выполнения операции move для заданного класса point_class."""
+    points = [point_class(1, 2) for _ in range(num_iterations)]
+
+    timer = timeit.Timer(
+        stmt='[p.move(1, 1) for p in points]',
+        globals={'points': points}
+    )
+    
+    num_runs = 10 # Увеличиваем количество запусков для более точного измерения
+    total_time = sum(timer.repeat(repeat=num_runs, number=1)) #Суммируем время всех запусков
+    average_time = total_time / num_runs # вычисляем среднее время
+
+    return average_time
+
+
+def compare_size(point_class, num_samples=5):
+    """Сравнение размеров объектов заданного класса."""
+    sizes = [sys.getsizeof(point_class(1, 2)) for _ in range(num_samples)]
+    return sizes
+
+
+if __name__ == '__main__':
+    num_instances = 1000
+
+    # Замер времени для NormalPoint
+    normal_point_time = benchmark_move(NormalPoint, num_instances)
+    print(f"Время выполнения move для NormalPoint: {normal_point_time:.6f} секунд")
+
+    # Замер времени для SlotPoint
+    slot_point_time = benchmark_move(SlotPoint, num_instances)
+    print(f"Время выполнения move для SlotPoint: {slot_point_time:.6f} секунд")
+
+    # Сравнение размеров объектов
+    normal_point_sizes = compare_size(NormalPoint)
+    slot_point_sizes = compare_size(SlotPoint)
+
+    print(f"Размеры объектов NormalPoint (байт): {normal_point_sizes}")
+    print(f"Размеры объектов SlotPoint (байт): {slot_point_sizes}")
+
+    # Анализ результатов
+    print("\nАнализ:")
+    if normal_point_time < slot_point_time:
+        print("NormalPoint быстрее SlotPoint в операции move.")
+    elif slot_point_time < normal_point_time:
+        print("SlotPoint быстрее NormalPoint в операции move.")
+    else:
+        print("Время выполнения move одинаково для NormalPoint и SlotPoint.")
+
+    normal_point_size_mean = sum(normal_point_sizes) / len(normal_point_sizes)
+    slot_point_size_mean = sum(slot_point_sizes) / len(slot_point_sizes)
+
+    if normal_point_size_mean > slot_point_size_mean:
+        print("NormalPoint занимает больше памяти, чем SlotPoint.")
+    elif slot_point_size_mean > normal_point_size_mean:
+        print("SlotPoint занимает больше памяти, чем NormalPoint.")
+    else:
+        print("Объекты NormalPoint и SlotPoint занимают одинаковый объем памяти.")
+
+
+    # Пример использования (добавление атрибута в NormalPoint - для демонстрации)
+    np = NormalPoint(3, 4)
+    np.z = 5  # Динамическое добавление атрибута
+    print(f"Атрибут z объекта NormalPoint: {np.z}")
+
+    # Пример использования (попытка добавления атрибута в SlotPoint - вызовет ошибку)
+    try:
+        sp = SlotPoint(5, 6)
+        sp.z = 7  # Попытка динамического добавления атрибута
+    except AttributeError as e:
+        print(f"Ошибка при попытке добавить атрибут в SlotPoint: {e}")
