@@ -1,6 +1,47 @@
-Создайте класс Circle, который будет представлять круг. У него будут два атрибута: радиус и диаметр. Используйте свойство для вычисления диаметра, основываясь на радиусе. Также добавьте метод, который будет возвращать площадь круга.
+import math
 
-Задача:
+class Circle:
+    """
+    Класс, представляющий круг с атрибутом радиуса и свойством диаметра.
+    """
+    def __init__(self, radius):
+        """
+        Инициализирует объект Circle с заданным радиусом.
 
-Создайте класс с радиусом как атрибутом и диаметром как свойством.
-Реализуйте метод для вычисления площади круга.
+        Args:
+            radius (float): Радиус круга.
+        """
+        self.radius = radius
+
+    @property
+    def diameter(self):
+        """
+        Возвращает диаметр круга, вычисленный на основе радиуса.
+
+        Returns:
+            float: Диаметр круга.
+        """
+        return 2 * self.radius
+
+    @diameter.setter
+    def diameter(self, new_diameter):
+         self.radius = new_diameter / 2
+
+    def area(self):
+        """
+        Вычисляет и возвращает площадь круга.
+
+        Returns:
+            float: Площадь круга.
+        """
+        return math.pi * self.radius**2
+
+# Пример использования:
+my_circle = Circle(radius=5)
+
+print(f"Радиус круга: {my_circle.radius}")
+print(f"Диаметр круга: {my_circle.diameter}")
+print(f"Площадь круга: {my_circle.area()}")
+
+my_circle.diameter = 10
+print(f"Радиус круга после изменения диаметра: {my_circle.radius}")
